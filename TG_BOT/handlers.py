@@ -1,8 +1,7 @@
 import info
 from aiogram import types
-import client_kb
 from client_kb import kb_client
-
+from data_base import sqlite_db
 
 async def command_start(message: types.Message):
     await message.answer("Вас приветствует бот компании 'Три Дракона'")
@@ -16,8 +15,6 @@ async def command_help(message: types.Message):
     await message.answer("Используйте меню для навигации", reply_markup=kb_client)
 
 
-
-
 async def command_open_time(message: types.Message):
     await message.answer("""Время работы с 11:00 до 24:00 ежедневно, без выходных.\n
     По г.Пересвет заказы принимаются до 23:45, а в остальные районы заказы принимаются до 23:30.""")
@@ -29,3 +26,7 @@ async def command_summa_zakaza(message: types.Message):
 
 async def command_o_nas(message: types.Message):
     await message.answer(info.o_nas)
+
+
+async def menu(message: types.Message):
+    await sqlite_db.sql_read(message)
